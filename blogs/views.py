@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Blog, Category
+from django.shortcuts import render, get_object_or_404
+
 # Create your views here.
 
 def posts_by_category(request, category_id):
@@ -8,6 +10,8 @@ def posts_by_category(request, category_id):
         category = Category.objects.get(pk=category_id)
     except Category.DoesNotExist:
         return redirect('home')
+    
+    category = get_object_or_404(Category, pk=category_id)
     context = {
         'posts':posts,
         'category': category,
