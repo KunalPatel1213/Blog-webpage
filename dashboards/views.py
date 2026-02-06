@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .forms import CategoryForm
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 
 @login_required(login_url='login')
 def dashboard(request):
@@ -30,3 +31,20 @@ def add_category(request):
         'form': form,
     }
     return render(request, 'dashboard/add_category.html', context)
+
+
+def edit_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)   
+        if form.is_valid():
+            form.save()
+            return redirect('categories')
+    else:
+        form = CategoryForm(instance=category)   
+
+    context = {
+        'form': form,
+        'category': category,
+    }
+    return render(request, 'dashboard/edit_category.html', context)
