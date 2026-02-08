@@ -66,3 +66,11 @@ def delete_category(request, pk):
         'category': category,
     }
     return render(request, 'dashboard/delete_category.html', context)
+
+
+def posts(request):
+    posts = Blog.objects.all()
+    context = {
+        'posts':posts,
+    }
+    return render(request, 'dashboard/posts.html', context)

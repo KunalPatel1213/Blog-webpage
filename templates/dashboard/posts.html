@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+  {% include 'dashboard/sidebar.html' %}
+
+  <!-- Right sidebar -->
+  <div class="col-md-9">
+    <h2>All Posts</h2>
+    <a href="{% url 'add_category' %}" class="btn btn-dark text-light float-right mb-2">Add New</a>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tittle</th>
+          <th>Category</th>
+          <th>Author</th>
+          <th>Status</th>
+          <th>featured</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.category }}</td>
+          <td>{{ post.author }}</td>
+          <td>{{ post.status }}</td>
+          <td>{{ post.is_featured }}</td>
+          <td>
+            <!-- Edit button -->
+            <a href="">
+              <i class="fa fa-edit text-success"></i>
+            </a>
+            &emsp;
+
+            <!-- Delete button (POST form) -->
+            <form action="" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" style="border:none; background:none;">
+                <i class="fa fa-trash text-danger"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="text-center">No categories found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
