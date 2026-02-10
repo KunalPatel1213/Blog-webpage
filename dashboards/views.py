@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from blogs.models import Category, Blog
 from django.contrib.auth.decorators import login_required
 from .forms import CategoryForm, BlogPostForm
+from django.template.defaultfilters import slugify
 
 # Dashboard view
 @login_required(login_url='login')
@@ -71,7 +72,7 @@ def delete_category(request, pk):
 def posts(request):
     posts = Blog.objects.all()
     context = {
-        'posts':posts,
+        'posts': posts,
     }
     return render(request, 'dashboard/posts.html', context)
 
@@ -80,15 +81,22 @@ def add_post(request):
     if request.method == 'POST':
         form = BlogPostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(commit=False) #temperory saving the form 
+            post = form.save(commit=False)  # temporarily saving the form 
             post.author = request.user
+            title = form.cleaned_data['title']   # get title before saving
+            post.slug = slugify(title)  # initial slug
             post.save()
+
+            # ensure uniqueness by appending ID after first save
+            post.slug = slugify(title) + '-' + str(post.id)
+            post.save(update_fields=['slug'])
+
             return redirect('posts')
         else:
             print('form is invalid')
             print(form.errors)
     form = BlogPostForm()
     context = {
-        'form':form,
+        'form': form,
     }
     return render(request, 'dashboard/add_post.html', context)
