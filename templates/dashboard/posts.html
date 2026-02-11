@@ -32,7 +32,7 @@
           <td>{{ post.is_featured }}</td>
           <td>
             <!-- Edit button -->
-            <a href="">
+            <a href="{% url 'edit_post' post.id%}">
               <i class="fa fa-edit text-success"></i>
             </a>
             &emsp;
