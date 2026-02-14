@@ -13,11 +13,11 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Tittle</th>
+          <th>Title</th>
           <th>Category</th>
           <th>Author</th>
           <th>Status</th>
-          <th>featured</th>
+          <th>Featured</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -29,16 +29,16 @@
           <td>{{ post.category }}</td>
           <td>{{ post.author }}</td>
           <td>{{ post.status }}</td>
-          <td>{{ post.is_featured }}</td>
+          <td>{% if post.is_featured %}✔{% else %}✘{% endif %}</td>
           <td>
             <!-- Edit button -->
-            <a href="{% url 'edit_post' post.id%}">
+            <a href="{% url 'edit_post' post.id %}">
               <i class="fa fa-edit text-success"></i>
             </a>
             &emsp;
 
-            <!-- Delete button (POST form) -->
-            <form action="" method="post" style="display:inline;">
+            <!-- Delete button -->
+            <form action="{% url 'delete_post' post.id %}" method="post" style="display:inline;">
               {% csrf_token %}
               <button type="submit" style="border:none; background:none;">
                 <i class="fa fa-trash text-danger"></i>
@@ -48,7 +48,7 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="5" class="text-center">No categories found.</td>
+          <td colspan="7" class="text-center">No posts found.</td>
         </tr>
         {% endfor %}
       </tbody>
