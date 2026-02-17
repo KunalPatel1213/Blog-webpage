@@ -36,10 +36,13 @@
           <td>{% if post.is_featured %}✔{% else %}✘{% endif %}</td>
           <td>
             <!-- Edit button -->
-            <a href="">
+            <a href="{% url 'edit_user' user.id %}">
               <i class="fa fa-edit text-success"></i>
             </a>
             &emsp;
+            <a href="{% url 'delete_user' user.id %}">
+              <i class="fa fa-edit text-danger"></i>
+            </a>
 
             <!-- Delete button -->
             <form action="" method="post" style="display:inline;">
