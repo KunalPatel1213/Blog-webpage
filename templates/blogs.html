@@ -23,6 +23,19 @@
                 <section class="mb-5">
                     <p class="fs-5 mb-4">{{single_blog.short_description }}</p>
                     <p class="fs-5 mb-4">{{single_blog.blog_body }}</p>
+
+                    {% comment %} Comments]es {% endcomment %}
+                    <h4>Commetns (0) </h4>
+                    {% if comments %}
+                         <div class ="card">
+                            <div class="card-body">
+                                <o class="card-task">{{ comment }}</p>
+                                </div>
+                        </div>
+                        {% endfor %}
+                    {%else%}
+                    No comments yet
+                    {endif}                                                                                                                                                                                                                                                                                                                                ts
                     </section>
             </article>
         </div>
